@@ -7,7 +7,8 @@ An advanced tarot card reading simulator that combines traditional tarot card me
 - **Complete 78-card Tarot deck** (Major + Minor Arcana)
 - **Multiple spread types** (Single card, 3-card, Celtic Cross, Relationship, Yes/No)
 - **Reversed card interpretations** (30% probability)
-- **AI-powered extensive readings** via Google Gemini API
+- **🇮🇹 Italian language support** - Complete translations for card names, meanings, and interface
+- **AI-powered extensive readings** via Google Gemini API (supports both English and Italian)
 - **Interactive and command-line modes**
 - **Beautiful formatted output** with emojis
 
@@ -70,6 +71,21 @@ python3 tarots.py --spread three --question "Career guidance?" --extensive
 python3 tarots.py --spread celtic --api-key "your-key" --extensive --question "Life guidance?"
 ```
 
+**Italian Language Support:**
+```bash
+# Single card in Italian
+python3 tarots.py --spread single --italian --question "Che cosa devo sapere oggi?"
+
+# Interactive mode in Italian
+python3 tarots.py --interactive --italian
+
+# Three card spread with AI reading in Italian
+python3 tarots.py --spread three --italian --extensive --question "Come andrà la mia settimana?"
+
+# Short form using -it flag
+python3 tarots.py -s single -it -q "Quale carta per oggi?"
+```
+
 ## Available Spreads
 
 1. **Single Card Draw** - Daily guidance or quick insight
@@ -77,6 +93,44 @@ python3 tarots.py --spread celtic --api-key "your-key" --extensive --question "L
 3. **Celtic Cross** - Comprehensive 10-card life reading
 4. **Relationship Spread** - 5-card relationship insights
 5. **Yes/No Spread** - 3-card yes/no guidance
+
+## 🇮🇹 Italian Language Support
+
+The simulator includes complete Italian language support with:
+
+- **Translated card names**: All Major Arcana cards (e.g., "Il Matto", "La Papessa", "L'Imperatore")
+- **Italian suit names**: Minor Arcana suits ("Bastoni", "Coppe", "Spade", "Denari")
+- **Italian court cards**: "Fante", "Cavaliere", "Regina", "Re"
+- **Translated meanings**: Card interpretations in Italian
+- **Italian interface**: All prompts, labels, and messages in Italian
+- **Italian AI readings**: Gemini API generates readings in Italian when requested
+- **Reversed cards**: Shows "(Rovesciata)" instead of "(Reversed)"
+
+### Italian Example Output
+
+```
+============================================================
+🔮 Stesa di Tre Carte - Passato, Presente, Futuro
+============================================================
+Domanda: Come andrà la mia settimana?
+
+Carte estratte:
+----------------------------------------
+
+📍 Passato:
+   🃏 Il Diavolo
+   💭 Schiavitù, dipendenza, sessualità, materialismo
+
+📍 Presente:
+   🃏 La Papessa (Rovesciata)
+   💭 Segreti, disconnessione dall'intuizione, ritiro
+
+📍 Futuro:
+   🃏 7 di Coppe
+   💭 Opportunities, choices, wishful thinking
+
+============================================================
+```
 
 ## Example Output
 
@@ -117,6 +171,7 @@ Cards drawn:
 - `--spread, -s`: Choose spread type (single, three, celtic, relationship, yesno)
 - `--question, -q`: Your question for the reading
 - `--interactive, -i`: Run in interactive mode
+- `--italian, -it`: Display cards and meanings in Italian
 - `--api-key`: Google Gemini API key for AI readings
 - `--extensive, -e`: Generate extensive AI-powered interpretation
 
@@ -151,3 +206,16 @@ Google Gemini API has generous free tiers. Each extensive reading uses approxima
 - No reading data is stored or transmitted except to Google's Gemini API for processing
 - Your questions and card draws are only used to generate the reading response
 - API calls are made securely over HTTPS
+
+## License
+
+This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](LICENSE) file for details.
+
+## Contributing
+
+Contributions are welcome! Feel free to:
+- Add more tarot card translations
+- Improve card meanings and interpretations
+- Add new spread types
+- Enhance the AI prompts
+- Report bugs or suggest features
