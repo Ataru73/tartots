@@ -20,10 +20,20 @@ class Suit(Enum):
     CUPS = "Cups"
     SWORDS = "Swords"
     PENTACLES = "Pentacles"
+    
+    def italian_name(self):
+        italian_suits = {
+            "Wands": "Bastoni",
+            "Cups": "Coppe", 
+            "Swords": "Spade",
+            "Pentacles": "Denari"
+        }
+        return italian_suits[self.value]
 
 class TarotCard:
     def __init__(self, name: str, suit: Suit = None, number: int = None, 
-                 upright_meaning: str = "", reversed_meaning: str = "", is_major: bool = False):
+                 upright_meaning: str = "", reversed_meaning: str = "", is_major: bool = False,
+                 italian_name: str = "", italian_upright: str = "", italian_reversed: str = ""):
         self.name = name
         self.suit = suit
         self.number = number
@@ -31,14 +41,26 @@ class TarotCard:
         self.reversed_meaning = reversed_meaning
         self.is_major = is_major
         self.is_reversed = False
+        self.italian_name = italian_name
+        self.italian_upright = italian_upright
+        self.italian_reversed = italian_reversed
     
-    def __str__(self):
-        suit_str = f" of {self.suit.value}" if self.suit else ""
-        reversed_str = " (Reversed)" if self.is_reversed else ""
-        return f"{self.name}{suit_str}{reversed_str}"
+    def __str__(self, italian=False):
+        if italian and self.italian_name:
+            name = self.italian_name
+            suit_str = f" di {self.suit.italian_name()}" if self.suit else ""
+            reversed_str = " (Rovesciata)" if self.is_reversed else ""
+        else:
+            name = self.name
+            suit_str = f" of {self.suit.value}" if self.suit else ""
+            reversed_str = " (Reversed)" if self.is_reversed else ""
+        return f"{name}{suit_str}{reversed_str}"
     
-    def get_meaning(self):
-        return self.reversed_meaning if self.is_reversed else self.upright_meaning
+    def get_meaning(self, italian=False):
+        if italian and self.italian_upright and self.italian_reversed:
+            return self.italian_reversed if self.is_reversed else self.italian_upright
+        else:
+            return self.reversed_meaning if self.is_reversed else self.upright_meaning
 
 class TarotDeck:
     def __init__(self):
@@ -49,51 +71,86 @@ class TarotDeck:
     
     def _create_major_arcana(self):
         major_arcana = [
-            ("The Fool", "New beginnings, innocence, spontaneity", "Recklessness, taken advantage of, inconsideration"),
-            ("The Magician", "Manifestation, resourcefulness, power", "Manipulation, poor planning, untapped talents"),
-            ("The High Priestess", "Intuition, sacred knowledge, divine feminine", "Secrets, disconnected from intuition, withdrawal"),
-            ("The Empress", "Femininity, beauty, nature, nurturing", "Creative block, dependence on others"),
-            ("The Emperor", "Authority, establishment, structure, father figure", "Domination, excessive control, lack of discipline"),
-            ("The Hierophant", "Spiritual wisdom, religious beliefs, conformity", "Personal beliefs, freedom, challenging the status quo"),
-            ("The Lovers", "Love, harmony, relationships, values alignment", "Self-love, disharmony, imbalance, misalignment of values"),
-            ("The Chariot", "Control, willpower, success, determination", "Lack of control, lack of direction, aggression"),
-            ("Strength", "Strength, courage, persuasion, influence, compassion", "Inner strength, self-doubt, low energy, raw emotion"),
-            ("The Hermit", "Soul searching, introspection, inner guidance", "Isolation, loneliness, withdrawal"),
-            ("Wheel of Fortune", "Good luck, karma, life cycles, destiny", "Bad luck, lack of control, clinging to control"),
-            ("Justice", "Justice, fairness, truth, cause and effect", "Unfairness, lack of accountability, dishonesty"),
-            ("The Hanged Man", "Waiting, surrender, letting go, new perspective", "Delays, resistance, stalling, indecision"),
-            ("Death", "Endings, change, transformation, transition", "Resistance to change, personal transformation, inner purging"),
-            ("Temperance", "Balance, moderation, patience, purpose", "Imbalance, excess, self-healing, re-alignment"),
-            ("The Devil", "Bondage, addiction, sexuality, materialism", "Releasing limiting beliefs, exploring dark thoughts, detachment"),
-            ("The Tower", "Sudden change, upheaval, chaos, revelation", "Personal transformation, fear of change, averting disaster"),
-            ("The Star", "Hope, faith, purpose, renewal, spirituality", "Lack of faith, despair, self-trust, disconnection"),
-            ("The Moon", "Illusion, fear, anxiety, subconscious, intuition", "Release of fear, repressed emotion, inner confusion"),
-            ("The Sun", "Positivity, fun, warmth, success, vitality", "Inner child, feeling down, overly optimistic"),
-            ("Judgement", "Judgement, rebirth, inner calling, forgiveness", "Self-doubt, inner critic, ignoring the call"),
-            ("The World", "Completion, integration, accomplishment, travel", "Seeking personal closure, short-cuts, delays")
+            ("The Fool", "New beginnings, innocence, spontaneity", "Recklessness, taken advantage of, inconsideration",
+             "Il Matto", "Nuovi inizi, innocenza, spontaneità", "Imprudenza, essere ingannati, sconsideratezza"),
+            ("The Magician", "Manifestation, resourcefulness, power", "Manipulation, poor planning, untapped talents",
+             "Il Mago", "Manifestazione, intraprendenza, potere", "Manipolazione, scarsa pianificazione, talenti non sfruttati"),
+            ("The High Priestess", "Intuition, sacred knowledge, divine feminine", "Secrets, disconnected from intuition, withdrawal",
+             "La Papessa", "Intuizione, conoscenza sacra, femminino divino", "Segreti, disconnessione dall'intuizione, ritiro"),
+            ("The Empress", "Femininity, beauty, nature, nurturing", "Creative block, dependence on others",
+             "L'Imperatrice", "Femminilità, bellezza, natura, nutrimento", "Blocco creativo, dipendenza dagli altri"),
+            ("The Emperor", "Authority, establishment, structure, father figure", "Domination, excessive control, lack of discipline",
+             "L'Imperatore", "Autorità, istituzione, struttura, figura paterna", "Dominazione, controllo eccessivo, mancanza di disciplina"),
+            ("The Hierophant", "Spiritual wisdom, religious beliefs, conformity", "Personal beliefs, freedom, challenging the status quo",
+             "Il Papa", "Saggezza spirituale, credenze religiose, conformità", "Credenze personali, libertà, sfida dello status quo"),
+            ("The Lovers", "Love, harmony, relationships, values alignment", "Self-love, disharmony, imbalance, misalignment of values",
+             "Gli Amanti", "Amore, armonia, relazioni, allineamento dei valori", "Amor proprio, disarmonia, squilibrio, disallineamento dei valori"),
+            ("The Chariot", "Control, willpower, success, determination", "Lack of control, lack of direction, aggression",
+             "Il Carro", "Controllo, forza di volontà, successo, determinazione", "Mancanza di controllo, mancanza di direzione, aggressività"),
+            ("Strength", "Strength, courage, persuasion, influence, compassion", "Inner strength, self-doubt, low energy, raw emotion",
+             "La Forza", "Forza, coraggio, persuasione, influenza, compassione", "Forza interiore, dubbi su se stessi, poca energia, emozioni crude"),
+            ("The Hermit", "Soul searching, introspection, inner guidance", "Isolation, loneliness, withdrawal",
+             "L'Eremita", "Ricerca dell'anima, introspezione, guida interiore", "Isolamento, solitudine, ritiro"),
+            ("Wheel of Fortune", "Good luck, karma, life cycles, destiny", "Bad luck, lack of control, clinging to control",
+             "La Ruota della Fortuna", "Buona fortuna, karma, cicli di vita, destino", "Sfortuna, mancanza di controllo, aggrapparsi al controllo"),
+            ("Justice", "Justice, fairness, truth, cause and effect", "Unfairness, lack of accountability, dishonesty",
+             "La Giustizia", "Giustizia, equità, verità, causa ed effetto", "Ingiustizia, mancanza di responsabilità, disonestà"),
+            ("The Hanged Man", "Waiting, surrender, letting go, new perspective", "Delays, resistance, stalling, indecision",
+             "L'Appeso", "Attesa, resa, lasciare andare, nuova prospettiva", "Ritardi, resistenza, procrastinazione, indecisione"),
+            ("Death", "Endings, change, transformation, transition", "Resistance to change, personal transformation, inner purging",
+             "La Morte", "Fine, cambiamento, trasformazione, transizione", "Resistenza al cambiamento, trasformazione personale, purificazione interiore"),
+            ("Temperance", "Balance, moderation, patience, purpose", "Imbalance, excess, self-healing, re-alignment",
+             "La Temperanza", "Equilibrio, moderazione, pazienza, scopo", "Squilibrio, eccesso, auto-guarigione, riallineamento"),
+            ("The Devil", "Bondage, addiction, sexuality, materialism", "Releasing limiting beliefs, exploring dark thoughts, detachment",
+             "Il Diavolo", "Schiavitù, dipendenza, sessualità, materialismo", "Liberazione dalle credenze limitanti, esplorazione di pensieri oscuri, distacco"),
+            ("The Tower", "Sudden change, upheaval, chaos, revelation", "Personal transformation, fear of change, averting disaster",
+             "La Torre", "Cambiamento improvviso, sconvolgimento, chaos, rivelazione", "Trasformazione personale, paura del cambiamento, evitare il disastro"),
+            ("The Star", "Hope, faith, purpose, renewal, spirituality", "Lack of faith, despair, self-trust, disconnection",
+             "La Stella", "Speranza, fede, scopo, rinnovamento, spiritualità", "Mancanza di fede, disperazione, fiducia in se stessi, disconnessione"),
+            ("The Moon", "Illusion, fear, anxiety, subconscious, intuition", "Release of fear, repressed emotion, inner confusion",
+             "La Luna", "Illusione, paura, ansia, subconscio, intuizione", "Liberazione dalla paura, emozioni represse, confusione interiore"),
+            ("The Sun", "Positivity, fun, warmth, success, vitality", "Inner child, feeling down, overly optimistic",
+             "Il Sole", "Positività, divertimento, calore, successo, vitalità", "Bambino interiore, sentirsi giù, eccessivamente ottimista"),
+            ("Judgement", "Judgement, rebirth, inner calling, forgiveness", "Self-doubt, inner critic, ignoring the call",
+             "Il Giudizio", "Giudizio, rinascita, chiamata interiore, perdono", "Dubbi su se stessi, critico interiore, ignorare la chiamata"),
+            ("The World", "Completion, integration, accomplishment, travel", "Seeking personal closure, short-cuts, delays",
+             "Il Mondo", "Completamento, integrazione, realizzazione, viaggio", "Ricerca di chiusura personale, scorciatoie, ritardi")
         ]
         
-        for name, upright, reversed in major_arcana:
-            self.cards.append(TarotCard(name, upright_meaning=upright, reversed_meaning=reversed, is_major=True))
+        for name, upright, reversed, italian_name, italian_upright, italian_reversed in major_arcana:
+            self.cards.append(TarotCard(name, upright_meaning=upright, reversed_meaning=reversed, is_major=True,
+                                      italian_name=italian_name, italian_upright=italian_upright, italian_reversed=italian_reversed))
     
     def _create_minor_arcana(self):
         # Court cards meanings
         court_meanings = {
             "Page": {
                 "upright": "New ideas, enthusiasm, messages",
-                "reversed": "Self-doubt, immaturity, lack of progress"
+                "reversed": "Self-doubt, immaturity, lack of progress",
+                "italian_name": "Fante",
+                "italian_upright": "Nuove idee, entusiasmo, messaggi",
+                "italian_reversed": "Dubbi su se stessi, immaturità, mancanza di progresso"
             },
             "Knight": {
                 "upright": "Action, adventure, impulsiveness", 
-                "reversed": "Inaction, haste, unfinished business"
+                "reversed": "Inaction, haste, unfinished business",
+                "italian_name": "Cavaliere",
+                "italian_upright": "Azione, avventura, impulsività",
+                "italian_reversed": "Inazione, fretta, affari incompiuti"
             },
             "Queen": {
                 "upright": "Compassion, calm, comfort, loyalty",
-                "reversed": "Dependency, smothering, selfishness"
+                "reversed": "Dependency, smothering, selfishness",
+                "italian_name": "Regina",
+                "italian_upright": "Compassione, calma, comfort, lealtà",
+                "italian_reversed": "Dipendenza, soffocamento, egoismo"
             },
             "King": {
                 "upright": "Leadership, honor, control",
-                "reversed": "Dishonesty, lack of control, weak leadership"
+                "reversed": "Dishonesty, lack of control, weak leadership",
+                "italian_name": "Re",
+                "italian_upright": "Leadership, onore, controllo",
+                "italian_reversed": "Disonestà, mancanza di controllo, leadership debole"
             }
         }
         
@@ -172,14 +229,20 @@ class TarotDeck:
                 if number in suit_data["numbers"]:
                     upright, reversed = suit_data["numbers"][number]
                     card_name = "Ace" if number == 1 else str(number)
-                    self.cards.append(TarotCard(card_name, suit, number, upright, reversed))
+                    italian_card_name = "Asso" if number == 1 else str(number)
+                    # Add basic Italian translations for numbered cards (meanings are in English for now)
+                    self.cards.append(TarotCard(card_name, suit, number, upright, reversed,
+                                              italian_name=italian_card_name, italian_upright=upright, italian_reversed=reversed))
         
         # Create court cards
         for suit in Suit:
             for court, meanings in court_meanings.items():
                 upright = f"{meanings['upright']} - {suit_meanings[suit]['keywords']}"
                 reversed = f"{meanings['reversed']} - {suit_meanings[suit]['keywords']}"
-                self.cards.append(TarotCard(court, suit, upright_meaning=upright, reversed_meaning=reversed))
+                italian_upright = f"{meanings['italian_upright']} - {suit_meanings[suit]['keywords']}"
+                italian_reversed = f"{meanings['italian_reversed']} - {suit_meanings[suit]['keywords']}"
+                self.cards.append(TarotCard(court, suit, upright_meaning=upright, reversed_meaning=reversed,
+                                          italian_name=meanings['italian_name'], italian_upright=italian_upright, italian_reversed=italian_reversed))
     
     def reset_deck(self):
         """Reset deck and shuffle"""
@@ -214,29 +277,51 @@ class GeminiAPI:
             print("⚠️  Warning: No Gemini API key found. Extensive readings will not be available.")
             print("   Set GEMINI_API_KEY environment variable or pass --api-key to enable.")
     
-    def generate_extensive_reading(self, reading: Dict) -> str:
+    def generate_extensive_reading(self, reading: Dict, italian: bool = False) -> str:
         """Generate an extensive tarot reading using Gemini API"""
         if not self.api_key:
-            return "\n❌ Extensive reading unavailable: No Gemini API key configured."
+            error_msg = "\n❌ Lettura estesa non disponibile: Nessuna chiave API Gemini configurata." if italian else "\n❌ Extensive reading unavailable: No Gemini API key configured."
+            return error_msg
         
         # Prepare the prompt for Gemini
-        prompt = self._create_reading_prompt(reading)
+        prompt = self._create_reading_prompt(reading, italian)
         
         try:
             response = self._call_gemini_api(prompt)
             return response
         except Exception as e:
-            return f"\n❌ Error generating extensive reading: {e}"
+            error_msg = f"\n❌ Errore nella generazione della lettura estesa: {e}" if italian else f"\n❌ Error generating extensive reading: {e}"
+            return error_msg
     
-    def _create_reading_prompt(self, reading: Dict) -> str:
+    def _create_reading_prompt(self, reading: Dict, italian: bool = False) -> str:
         """Create a detailed prompt for the Gemini API"""
         cards_info = []
         for position, card in reading['cards'].items():
-            cards_info.append(f"- {position}: {card} - {card.get_meaning()}")
+            cards_info.append(f"- {position}: {card.__str__(italian)} - {card.get_meaning(italian)}")
         
         cards_text = "\n".join(cards_info)
         
-        prompt = f"""
+        if italian:
+            prompt = f"""
+Sei un lettore di tarocchi esperto e perspicace. Fornisci una lettura dei tarocchi completa e dettagliata basata sulle seguenti informazioni:
+
+Stesa: {reading['name']}
+Domanda: {reading['question']}
+
+Carte estratte:
+{cards_text}
+
+Per favore fornisci:
+1. Una panoramica dei temi principali della lettura
+2. Interpretazione dettagliata di ogni carta nella sua posizione
+3. Come le carte si relazionano tra loro e raccontano una storia
+4. Consigli pratici e guida basati sulla lettura
+5. Su cosa il consultante dovrebbe concentrarsi o essere consapevole
+
+Scrivi questa come una lettura dei tarocchi professionale, empatica e perspicace che verrebbe data da un lettore esperto. Usa un tono caloroso e di supporto mentre sei onesto riguardo a eventuali sfide indicate. La lettura dovrebbe essere di circa 400-600 parole.
+"""
+        else:
+            prompt = f"""
 You are an experienced and insightful tarot reader. Please provide a comprehensive, detailed tarot reading based on the following information:
 
 Spread: {reading['name']}
@@ -423,69 +508,162 @@ class TarotReading:
         }
         return spread
 
-def print_reading(reading: Dict, gemini_api: GeminiAPI = None, extensive: bool = False):
+def print_reading(reading: Dict, gemini_api: GeminiAPI = None, extensive: bool = False, italian: bool = False):
     """Print a formatted tarot reading"""
     print("=" * 60)
-    print(f"🔮 {reading['name']}")
+    
+    # Translate spread names if Italian mode
+    if italian:
+        italian_spread_names = {
+            "Single Card Draw": "Estrazione Carta Singola",
+            "Three Card Spread - Past, Present, Future": "Stesa di Tre Carte - Passato, Presente, Futuro",
+            "Celtic Cross Spread": "Croce Celtica",
+            "Relationship Spread": "Stesa delle Relazioni",
+            "Yes/No Spread": "Stesa Sì/No"
+        }
+        name = italian_spread_names.get(reading['name'], reading['name'])
+        question_label = "Domanda"
+        answer_label = "Risposta"
+        cards_drawn_label = "Carte estratte"
+        
+        # Translate position names
+        italian_positions = {
+            "Past": "Passato",
+            "Present": "Presente", 
+            "Future": "Futuro",
+            "Your Card": "La Tua Carta",
+            "Present Situation": "Situazione Presente",
+            "Challenge/Cross": "Sfida/Croce",
+            "Distant Past/Foundation": "Passato Lontano/Fondazione",
+            "Recent Past": "Passato Recente",
+            "Possible Outcome": "Risultato Possibile",
+            "Near Future": "Futuro Prossimo",
+            "Your Approach": "Il Tuo Approccio",
+            "External Influences": "Influenze Esterne",
+            "Hopes and Fears": "Speranze e Paure",
+            "Final Outcome": "Risultato Finale",
+            "You": "Tu",
+            "Your Partner": "Il Tuo Partner",
+            "The Relationship": "La Relazione",
+            "Challenges": "Sfide",
+            "Potential/Outcome": "Potenziale/Risultato",
+            "Card 1": "Carta 1",
+            "Card 2": "Carta 2",
+            "Card 3": "Carta 3"
+        }
+    else:
+        name = reading['name']
+        question_label = "Question"
+        answer_label = "Answer"
+        cards_drawn_label = "Cards drawn"
+        italian_positions = {}
+    
+    print(f"🔮 {name}")
     print("=" * 60)
-    print(f"Question: {reading['question']}")
+    print(f"{question_label}: {reading['question']}")
     
     if 'answer' in reading:
-        print(f"\nAnswer: {reading['answer']}")
+        # Translate Yes/No answers if in Italian
+        if italian:
+            answer = reading['answer']
+            answer = answer.replace('Yes', 'Sì').replace('No', 'No')
+            answer = answer.replace('Strong', 'Forte').replace('Moderate', 'Moderata')
+            answer = answer.replace('indication', 'indicazione')
+        else:
+            answer = reading['answer']
+        print(f"\n{answer_label}: {answer}")
     
-    print("\nCards drawn:")
+    print(f"\n{cards_drawn_label}:")
     print("-" * 40)
     
     for position, card in reading['cards'].items():
-        print(f"\n📍 {position}:")
-        print(f"   🃏 {card}")
-        print(f"   💭 {card.get_meaning()}")
+        translated_position = italian_positions.get(position, position) if italian else position
+        print(f"\n📍 {translated_position}:")
+        print(f"   🃏 {card.__str__(italian)}")
+        print(f"   💭 {card.get_meaning(italian)}")
     
     print("\n" + "=" * 60)
     
     # Generate extensive reading if requested and API is available
     if extensive and gemini_api:
-        print("\n🤖 Generating extensive reading with AI...")
-        extensive_reading = gemini_api.generate_extensive_reading(reading)
+        loading_msg = "🤖 Generazione lettura estesa con IA..." if italian else "🤖 Generating extensive reading with AI..."
+        header_msg = "📖 LETTURA ESTESA" if italian else "📖 EXTENSIVE READING"
+        print(f"\n{loading_msg}")
+        extensive_reading = gemini_api.generate_extensive_reading(reading, italian)
         print("\n" + "=" * 60)
-        print("📖 EXTENSIVE READING")
+        print(header_msg)
         print("=" * 60)
         print(extensive_reading)
         print("\n" + "=" * 60)
 
-def interactive_reading(gemini_api: GeminiAPI = None):
+def interactive_reading(gemini_api: GeminiAPI = None, italian: bool = False):
     """Interactive tarot reading session"""
     reader = TarotReading(gemini_api)
     
-    print("🔮 Welcome to the Tarot Reading Simulator! 🔮")
-    if gemini_api and gemini_api.api_key:
-        print("✨ AI-powered extensive readings available!")
-    print("\nAvailable spreads:")
-    print("1. Single Card Draw")
-    print("2. Three Card Spread (Past, Present, Future)")
-    print("3. Celtic Cross (10 cards)")
-    print("4. Relationship Spread (5 cards)")
-    print("5. Yes/No Spread (3 cards)")
+    if italian:
+        print("🔮 Benvenuto al Simulatore di Lettura dei Tarocchi! 🔮")
+        if gemini_api and gemini_api.api_key:
+            print("✨ Letture estese potenziate dall'IA disponibili!")
+        print("\nStese disponibili:")
+        print("1. Estrazione Carta Singola")
+        print("2. Stesa di Tre Carte (Passato, Presente, Futuro)")
+        print("3. Croce Celtica (10 carte)")
+        print("4. Stesa delle Relazioni (5 carte)")
+        print("5. Stesa Sì/No (3 carte)")
+        
+        spread_choice_prompt = "\nScegli una stesa (1-5) o 'q' per uscire: "
+        question_prompt = "Inserisci la tua domanda (o premi Invio per una guida generale): "
+        extensive_prompt = "Vorresti una lettura estesa alimentata dall'IA? (s/n): "
+        shuffling_msg = "\n🃏 Mescolando le carte..."
+        invalid_msg = "Scelta non valida. Seleziona 1-5."
+        another_prompt = "\nVorresti un'altra lettura? (s/n): "
+        goodbye_msg = "Grazie per aver usato il Simulatore di Lettura dei Tarocchi! 🌟"
+        error_msg = "Si è verificato un errore: {}"
+        extensive_yes = 's'
+        another_yes = 's'
+        quit_key = 'q'
+    else:
+        print("🔮 Welcome to the Tarot Reading Simulator! 🔮")
+        if gemini_api and gemini_api.api_key:
+            print("✨ AI-powered extensive readings available!")
+        print("\nAvailable spreads:")
+        print("1. Single Card Draw")
+        print("2. Three Card Spread (Past, Present, Future)")
+        print("3. Celtic Cross (10 cards)")
+        print("4. Relationship Spread (5 cards)")
+        print("5. Yes/No Spread (3 cards)")
+        
+        spread_choice_prompt = "\nChoose a spread (1-5) or 'q' to quit: "
+        question_prompt = "Enter your question (or press Enter for general guidance): "
+        extensive_prompt = "Would you like an extensive AI-powered reading? (y/n): "
+        shuffling_msg = "\n🃏 Shuffling the cards..."
+        invalid_msg = "Invalid choice. Please select 1-5."
+        another_prompt = "\nWould you like another reading? (y/n): "
+        goodbye_msg = "Thank you for using the Tarot Reading Simulator! 🌟"
+        error_msg = "An error occurred: {}"
+        extensive_yes = 'y'
+        another_yes = 'y'
+        quit_key = 'q'
     
     while True:
         try:
-            choice = input("\nChoose a spread (1-5) or 'q' to quit: ").strip().lower()
+            choice = input(spread_choice_prompt).strip().lower()
             
-            if choice == 'q':
-                print("Thank you for using the Tarot Reading Simulator! 🌟")
+            if choice == quit_key:
+                print(goodbye_msg)
                 break
             
-            question = input("Enter your question (or press Enter for general guidance): ").strip()
+            question = input(question_prompt).strip()
             if not question:
                 question = None
             
             # Ask about extensive reading if Gemini API is available
             extensive = False
             if gemini_api and gemini_api.api_key:
-                extensive_choice = input("Would you like an extensive AI-powered reading? (y/n): ").strip().lower()
-                extensive = extensive_choice == 'y'
+                extensive_choice = input(extensive_prompt).strip().lower()
+                extensive = extensive_choice == extensive_yes
             
-            print("\n🃏 Shuffling the cards...")
+            print(shuffling_msg)
             
             if choice == '1':
                 reading = reader.single_card_draw(question)
@@ -498,21 +676,21 @@ def interactive_reading(gemini_api: GeminiAPI = None):
             elif choice == '5':
                 reading = reader.yes_no_spread(question)
             else:
-                print("Invalid choice. Please select 1-5.")
+                print(invalid_msg)
                 continue
             
-            print_reading(reading, gemini_api, extensive)
+            print_reading(reading, gemini_api, extensive, italian)
             
-            another = input("\nWould you like another reading? (y/n): ").strip().lower()
-            if another != 'y':
-                print("Thank you for using the Tarot Reading Simulator! 🌟")
+            another = input(another_prompt).strip().lower()
+            if another != another_yes:
+                print(goodbye_msg)
                 break
                 
         except KeyboardInterrupt:
-            print("\n\nThank you for using the Tarot Reading Simulator! 🌟")
+            print(f"\n\n{goodbye_msg}")
             break
         except Exception as e:
-            print(f"An error occurred: {e}")
+            print(error_msg.format(e))
 
 def main():
     parser = argparse.ArgumentParser(description="Tarot Card Reading Simulator")
@@ -521,6 +699,8 @@ def main():
     parser.add_argument("--question", "-q", type=str, help="Question for the reading")
     parser.add_argument("--interactive", "-i", action="store_true", 
                        help="Run in interactive mode")
+    parser.add_argument("--italian", "-it", action="store_true",
+                       help="Display cards and meanings in Italian")
     parser.add_argument("--api-key", type=str, help="Google Gemini API key for extensive readings")
     parser.add_argument("--extensive", "-e", action="store_true", 
                        help="Generate extensive AI-powered reading")
@@ -531,7 +711,7 @@ def main():
     gemini_api = GeminiAPI(args.api_key)
     
     if args.interactive or not args.spread:
-        interactive_reading(gemini_api)
+        interactive_reading(gemini_api, args.italian)
         return
     
     # Non-interactive mode
@@ -548,7 +728,7 @@ def main():
     elif args.spread == "yesno":
         reading = reader.yes_no_spread(args.question)
     
-    print_reading(reading, gemini_api, args.extensive)
+    print_reading(reading, gemini_api, args.extensive, args.italian)
 
 if __name__ == "__main__":
     main()
