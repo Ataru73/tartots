@@ -159,65 +159,109 @@ class TarotDeck:
             Suit.WANDS: {
                 "element": "Fire",
                 "keywords": "creativity, spirituality, passion, inspiration",
+                "italian_keywords": "creatività, spiritualità, passione, ispirazione",
                 "numbers": {
-                    1: ("New creative energy, inspiration", "Delays, lack of motivation"),
-                    2: ("Future planning, making decisions", "Fear of unknown, lack of planning"),
-                    3: ("Expansion, foresight, overseas opportunities", "Lack of foresight, delays"),
-                    4: ("Celebration, harmony, homecoming", "Personal celebration, inner harmony"),
-                    5: ("Conflict, disagreements, competition", "Inner conflict, conflict avoidance"),
-                    6: ("Public recognition, progress, self-confidence", "Private achievement, self-doubt"),
-                    7: ("Challenge, competition, perseverance", "Overwhelmed, giving up"),
-                    8: ("Movement, fast paced change, action", "Delays, frustration, resisting change"),
-                    9: ("Resilience, courage, persistence", "Inner courage, weakness"),
-                    10: ("Burden, extra responsibility, hard work", "Unable to delegate, overstressed")
+                    1: ("New creative energy, inspiration", "Delays, lack of motivation", 
+                        "Nuova energia creativa, ispirazione", "Ritardi, mancanza di motivazione"),
+                    2: ("Future planning, making decisions", "Fear of unknown, lack of planning",
+                        "Pianificazione del futuro, prendere decisioni", "Paura dell'ignoto, mancanza di pianificazione"),
+                    3: ("Expansion, foresight, overseas opportunities", "Lack of foresight, delays",
+                        "Espansione, lungimiranza, opportunità all'estero", "Mancanza di lungimiranza, ritardi"),
+                    4: ("Celebration, harmony, homecoming", "Personal celebration, inner harmony",
+                        "Celebrazione, armonia, ritorno a casa", "Celebrazione personale, armonia interiore"),
+                    5: ("Conflict, disagreements, competition", "Inner conflict, conflict avoidance",
+                        "Conflitto, disaccordi, competizione", "Conflitto interiore, evitare i conflitti"),
+                    6: ("Public recognition, progress, self-confidence", "Private achievement, self-doubt",
+                        "Riconoscimento pubblico, progresso, fiducia in sé", "Successo privato, dubbi su se stessi"),
+                    7: ("Challenge, competition, perseverance", "Overwhelmed, giving up",
+                        "Sfida, competizione, perseveranza", "Sopraffatti, arrendersi"),
+                    8: ("Movement, fast paced change, action", "Delays, frustration, resisting change",
+                        "Movimento, cambiamento veloce, azione", "Ritardi, frustrazione, resistenza al cambiamento"),
+                    9: ("Resilience, courage, persistence", "Inner courage, weakness",
+                        "Resilienza, coraggio, persistenza", "Coraggio interiore, debolezza"),
+                    10: ("Burden, extra responsibility, hard work", "Unable to delegate, overstressed",
+                         "Fardello, responsabilità extra, lavoro duro", "Incapacità di delegare, troppo stress")
                 }
             },
             Suit.CUPS: {
                 "element": "Water",
                 "keywords": "emotion, spirituality, intuition, relationships",
+                "italian_keywords": "emozione, spiritualità, intuizione, relazioni",
                 "numbers": {
-                    1: ("Love, new relationships, compassion", "Self-love, intuition, repressed emotions"),
-                    2: ("Unified love, partnership, mutual attraction", "Self-love, break-ups, disharmony"),
-                    3: ("Celebration, friendship, creativity", "Independence, alone time"),
-                    4: ("Meditation, contemplation, apathy", "Retreat, withdrawal, checking in"),
-                    5: ("Regret, failure, disappointment", "Personal setbacks, self-forgiveness"),
-                    6: ("Revisiting the past, childhood memories", "Living in the past, forgiveness"),
-                    7: ("Opportunities, choices, wishful thinking", "Alignment, personal values, overwhelmed by choices"),
-                    8: ("Disappointment, abandonment, withdrawal", "Trying one more time, indecision"),
-                    9: ("Satisfaction, emotional stability, luxury", "Inner happiness, materialism, dissatisfaction"),
-                    10: ("Divine love, blissful relationships, harmony", "Disconnection, misaligned values")
+                    1: ("Love, new relationships, compassion", "Self-love, intuition, repressed emotions",
+                        "Amore, nuove relazioni, compassione", "Amor proprio, intuizione, emozioni represse"),
+                    2: ("Unified love, partnership, mutual attraction", "Self-love, break-ups, disharmony",
+                        "Amore unificato, partnership, attrazione reciproca", "Amor proprio, rotture, disarmonia"),
+                    3: ("Celebration, friendship, creativity", "Independence, alone time",
+                        "Celebrazione, amicizia, creatività", "Indipendenza, tempo da soli"),
+                    4: ("Meditation, contemplation, apathy", "Retreat, withdrawal, checking in",
+                        "Meditazione, contemplazione, apatia", "Ritirata, ritiro, fare il punto"),
+                    5: ("Regret, failure, disappointment", "Personal setbacks, self-forgiveness",
+                        "Rimpianto, fallimento, delusione", "Battute d'arresto personali, auto-perdono"),
+                    6: ("Revisiting the past, childhood memories", "Living in the past, forgiveness",
+                        "Rivisitare il passato, ricordi d'infanzia", "Vivere nel passato, perdono"),
+                    7: ("Opportunities, choices, wishful thinking", "Alignment, personal values, overwhelmed by choices",
+                        "Opportunità, scelte, pensiero illusorio", "Allineamento, valori personali, sopraffatti dalle scelte"),
+                    8: ("Disappointment, abandonment, withdrawal", "Trying one more time, indecision",
+                        "Delusione, abbandono, ritiro", "Provare ancora una volta, indecisione"),
+                    9: ("Satisfaction, emotional stability, luxury", "Inner happiness, materialism, dissatisfaction",
+                        "Soddisfazione, stabilità emotiva, lusso", "Felicità interiore, materialismo, insoddisfazione"),
+                    10: ("Divine love, blissful relationships, harmony", "Disconnection, misaligned values",
+                         "Amore divino, relazioni felici, armonia", "Disconnessione, valori disallineati")
                 }
             },
             Suit.SWORDS: {
                 "element": "Air",
                 "keywords": "communication, intellect, conflict, thoughts",
+                "italian_keywords": "comunicazione, intelletto, conflitto, pensieri",
                 "numbers": {
-                    1: ("New ideas, mental clarity, breakthrough", "Inner clarity, re-thinking an idea"),
-                    2: ("Difficult decisions, weighing up options", "Inner turmoil, confusion, information overload"),
-                    3: ("Betrayal, hurt, grief, sorrow", "Recovery, forgiveness, moving on"),
-                    4: ("Contemplation, rest, relaxation, peace", "Awakening, re-examination, self-reflection"),
-                    5: ("Conflict, disagreements, competition", "Inner conflict, releasing stress"),
-                    6: ("Transition, change, rite of passage", "Personal transition, resistance to change"),
-                    7: ("Betrayal, deception, getting away with something", "Imposter syndrome, self-deception"),
-                    8: ("Negative thoughts, self-imposed restriction", "Self-limiting beliefs, inner critic"),
-                    9: ("Anxiety, worry, fear, depression", "Inner turmoil, deep-seated fears"),
-                    10: ("Painful endings, deep wounds, betrayal", "Recovery, regeneration, resisting an inevitable end")
+                    1: ("New ideas, mental clarity, breakthrough", "Inner clarity, re-thinking an idea",
+                        "Nuove idee, chiarezza mentale, svolta", "Chiarezza interiore, ripensare un'idea"),
+                    2: ("Difficult decisions, weighing up options", "Inner turmoil, confusion, information overload",
+                        "Decisioni difficili, valutare le opzioni", "Tumulto interiore, confusione, sovraccarico di informazioni"),
+                    3: ("Betrayal, hurt, grief, sorrow", "Recovery, forgiveness, moving on",
+                        "Tradimento, dolore, lutto, tristezza", "Recupero, perdono, andare avanti"),
+                    4: ("Contemplation, rest, relaxation, peace", "Awakening, re-examination, self-reflection",
+                        "Contemplazione, riposo, rilassamento, pace", "Risveglio, riesame, auto-riflessione"),
+                    5: ("Conflict, disagreements, competition", "Inner conflict, releasing stress",
+                        "Conflitto, disaccordi, competizione", "Conflitto interiore, liberazione dallo stress"),
+                    6: ("Transition, change, rite of passage", "Personal transition, resistance to change",
+                        "Transizione, cambiamento, rito di passaggio", "Transizione personale, resistenza al cambiamento"),
+                    7: ("Betrayal, deception, getting away with something", "Imposter syndrome, self-deception",
+                        "Tradimento, inganno, farla franca", "Sindrome dell'impostore, auto-inganno"),
+                    8: ("Negative thoughts, self-imposed restriction", "Self-limiting beliefs, inner critic",
+                        "Pensieri negativi, restrizione auto-imposta", "Credenze auto-limitanti, critico interiore"),
+                    9: ("Anxiety, worry, fear, depression", "Inner turmoil, deep-seated fears",
+                        "Ansia, preoccupazione, paura, depressione", "Tumulto interiore, paure profonde"),
+                    10: ("Painful endings, deep wounds, betrayal", "Recovery, regeneration, resisting an inevitable end",
+                         "Fine dolorose, ferite profonde, tradimento", "Recupero, rigenerazione, resistenza a una fine inevitabile")
                 }
             },
             Suit.PENTACLES: {
                 "element": "Earth",
                 "keywords": "material world, career, money, physical manifestation",
+                "italian_keywords": "mondo materiale, carriera, denaro, manifestazione fisica",
                 "numbers": {
-                    1: ("A new financial or career opportunity", "Lost opportunity, missed chance"),
-                    2: ("Multiple priorities, time management", "Over-committed, disorganization, reprioritization"),
-                    3: ("Collaboration, learning, implementation", "Disharmony, misalignment, working alone"),
-                    4: ("Saving money, security, conservatism", "Over-spending, greed, self-protection"),
-                    5: ("Financial insecurity, poverty, lack mindset", "Recovery from financial loss, spiritual poverty"),
-                    6: ("Gifts, generosity, sharing", "Self-care, unpaid debts, one-sided charity"),
-                    7: ("Long-term view, sustainable results", "Lack of long-term vision, limited success"),
-                    8: ("Apprenticeship, repetitive tasks, skill development", "Self-development, perfectionism, misdirected activity"),
-                    9: ("Abundance, luxury, self-sufficiency", "Self-worth, over-investment in work, hustling"),
-                    10: ("Wealth, financial security, family", "The dark side of wealth, financial failure")
+                    1: ("A new financial or career opportunity", "Lost opportunity, missed chance",
+                        "Una nuova opportunità finanziaria o di carriera", "Opportunità persa, occasione mancata"),
+                    2: ("Multiple priorities, time management", "Over-committed, disorganization, reprioritization",
+                        "Priorità multiple, gestione del tempo", "Impegni eccessivi, disorganizzazione, ripriorizzazione"),
+                    3: ("Collaboration, learning, implementation", "Disharmony, misalignment, working alone",
+                        "Collaborazione, apprendimento, implementazione", "Disarmonia, disallineamento, lavorare da soli"),
+                    4: ("Saving money, security, conservatism", "Over-spending, greed, self-protection",
+                        "Risparmiare denaro, sicurezza, conservatorismo", "Spesa eccessiva, avidità, auto-protezione"),
+                    5: ("Financial insecurity, poverty, lack mindset", "Recovery from financial loss, spiritual poverty",
+                        "Insicurezza finanziaria, povertà, mentalità di scarsità", "Recupero da perdite finanziarie, povertà spirituale"),
+                    6: ("Gifts, generosity, sharing", "Self-care, unpaid debts, one-sided charity",
+                        "Doni, generosità, condivisione", "Cura di sé, debiti non pagati, carità unilaterale"),
+                    7: ("Long-term view, sustainable results", "Lack of long-term vision, limited success",
+                        "Visione a lungo termine, risultati sostenibili", "Mancanza di visione a lungo termine, successo limitato"),
+                    8: ("Apprenticeship, repetitive tasks, skill development", "Self-development, perfectionism, misdirected activity",
+                        "Apprendistato, compiti ripetitivi, sviluppo di competenze", "Auto-sviluppo, perfezionismo, attività mal indirizzata"),
+                    9: ("Abundance, luxury, self-sufficiency", "Self-worth, over-investment in work, hustling",
+                        "Abbondanza, lusso, auto-sufficienza", "Autostima, sovra-investimento nel lavoro, darsi da fare"),
+                    10: ("Wealth, financial security, family", "The dark side of wealth, financial failure",
+                         "Ricchezza, sicurezza finanziaria, famiglia", "Il lato oscuro della ricchezza, fallimento finanziario")
                 }
             }
         }
@@ -227,20 +271,19 @@ class TarotDeck:
             suit_data = suit_meanings[suit]
             for number in range(1, 11):
                 if number in suit_data["numbers"]:
-                    upright, reversed = suit_data["numbers"][number]
+                    upright, reversed, italian_upright, italian_reversed = suit_data["numbers"][number]
                     card_name = "Ace" if number == 1 else str(number)
                     italian_card_name = "Asso" if number == 1 else str(number)
-                    # Add basic Italian translations for numbered cards (meanings are in English for now)
                     self.cards.append(TarotCard(card_name, suit, number, upright, reversed,
-                                              italian_name=italian_card_name, italian_upright=upright, italian_reversed=reversed))
+                                              italian_name=italian_card_name, italian_upright=italian_upright, italian_reversed=italian_reversed))
         
         # Create court cards
         for suit in Suit:
             for court, meanings in court_meanings.items():
                 upright = f"{meanings['upright']} - {suit_meanings[suit]['keywords']}"
                 reversed = f"{meanings['reversed']} - {suit_meanings[suit]['keywords']}"
-                italian_upright = f"{meanings['italian_upright']} - {suit_meanings[suit]['keywords']}"
-                italian_reversed = f"{meanings['italian_reversed']} - {suit_meanings[suit]['keywords']}"
+                italian_upright = f"{meanings['italian_upright']} - {suit_meanings[suit]['italian_keywords']}"
+                italian_reversed = f"{meanings['italian_reversed']} - {suit_meanings[suit]['italian_keywords']}"
                 self.cards.append(TarotCard(court, suit, upright_meaning=upright, reversed_meaning=reversed,
                                           italian_name=meanings['italian_name'], italian_upright=italian_upright, italian_reversed=italian_reversed))
     
