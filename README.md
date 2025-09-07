@@ -1,6 +1,6 @@
 # 🔮 Tarot Reading Simulator with AI
 
-An advanced tarot card reading simulator that combines traditional tarot card meanings with AI-powered extensive readings using Google Gemini API.
+A tarot card reading simulator that combines traditional tarot card meanings with AI-powered extensive readings using Google Gemini API.
 
 ## Features
 
